@@ -1,4 +1,4 @@
-//var currentQuestion = document.querySelector("#indivQuestion");
+var currentQuestion = 0;
 // var submitButton = [];
 // submitButton = document.querySelectorAll(".submit");
 var finalScore;
@@ -25,7 +25,7 @@ var questions = [
   },
   {
     questionText: "What is my favorite color",
-    answers: {a: "red", b: "orange", c: "yellow", d: "purple" },
+    answers: { a: "red", b: "orange", c: "yellow", d: "purple" },
     correct: "a",
   },
 ];
@@ -33,18 +33,26 @@ var questions = [
 startButton.addEventListener("click", startTest);
 
 function displayQuestion() {
-    const outerDiv = document.createElement("div");
-    outerDiv.innerHTML = `
-    <h4>${questions[0].questionText}</h4>
-    <ul>
-    <li>${questions[0].answers.a}</li>
-    <li>${questions[0].answers.b}</li>
-    <li>${questions[0].answers.c}</li>
-    <li>${questions[0].answers.d}</li>
-    </ul>`;
+    questionArea.innerHTML = "";
+  const outerDiv = document.createElement("div");
+  outerDiv.innerHTML = `
+    <h4>${questions[currentQuestion].questionText}</h4>
+    <button class="answerChoice">${questions[currentQuestion].answers.a}</button>
+    <button class="answerChoice">${questions[currentQuestion].answers.b}</button>
+    <button class="answerChoice">${questions[currentQuestion].answers.c}</button>
+    <button class="answerChoice">${questions[currentQuestion].answers.d}</button>`;
   questionArea.append(outerDiv);
+  var buttonCollection = document.querySelectorAll(".answerChoice");
+  console.log(buttonCollection);
+  for (var i = 0; i < buttonCollection.length; i++) {
+    buttonCollection[i].addEventListener("click", evaluate);
+  }
 }
 
+function evaluate() {
+  currentQuestion++;
+  displayQuestion();
+}
 //Adds event listeners for all of the clickable submit buttons
 //for (var i = 0; i < submitButton.length; i++ ){
 // submitButton[i].addEventListener("click", Quiz);
