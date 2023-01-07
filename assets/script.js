@@ -1,7 +1,8 @@
 var currentQuestion = 0;
 var finalScore;
 var questionArea = document.querySelector("#questionArea");
-var hsList = document.createElement("div");
+var hsArea = document.querySelector("#hsArea");
+var hsList = [];
 var startButton = document.querySelector("#start");
 var timerEl = document.querySelector("#timer");
 var currentTime = 80;
@@ -10,6 +11,7 @@ var indivQuestion = [];
 indivQuestion = document.querySelector("#indivQuestion");
 var correctAnswer;
 
+console.log(hsList);
 //Array of questions for the test
 var questions = [
   {
@@ -102,13 +104,22 @@ function endGame() {
         initials: document.querySelector("#playerInitials").value.trim(),
         score: finalScore
       }
-      localStorage.setItem("user", JSON.stringify(scoreEntry))
+    // hsList = JSON.parse(localStorage.getItem("highscore"));
+    console.log(hsList);  
+    if (hsList.length !== 0) {
+
+    }
+    hsList.push(scoreEntry);
+    localStorage.setItem("highscore", JSON.stringify(hsList))
+   // localStorage.setItem(document.querySelector("#playerInitials").value, finalScore);
     });
 }
 
 function highScores () {
   hsList.innerHTML="";
-
+  for (var i = 0; i < localStorage.length; i++){
+    $('body').append(localStorage.getItem(localStorage.key(i)));
+}
 }
 
 
@@ -119,3 +130,10 @@ document.querySelector("#end-game").addEventListener("click", function () {
 
   clearInterval(timerInterval);
 });
+
+// localStorage.key(0)
+// 'jie'
+// localStorage.key(1)
+// 'eie'
+// localStorage.getItem(localStorage.key(0))
+// '58'
