@@ -1,8 +1,7 @@
 var currentQuestion = 0;
-// var submitButton = [];
-// submitButton = document.querySelectorAll(".submit");
 var finalScore;
 var questionArea = document.querySelector("#questionArea");
+var hsList = document.createElement("div");
 var startButton = document.querySelector("#start");
 var timerEl = document.querySelector("#timer");
 var currentTime = 80;
@@ -10,6 +9,8 @@ var timerInterval;
 var indivQuestion = [];
 indivQuestion = document.querySelector("#indivQuestion");
 var correctAnswer;
+
+//Array of questions for the test
 var questions = [
   {
     questionText: "Which of these is not a datatype in Javascript?",
@@ -33,17 +34,26 @@ var questions = [
   },
 ];
 
+//Event listener to start test
 startButton.addEventListener("click", startTest);
-document.querySelector("#end-game").addEventListener('click', function() {
-    console.log('end the timer')
-    
-    clearInterval(
-        timerInterval
-    )
-})
 
+//Begins the quiz when the user clicks Go.
+function startTest() {
+  document.querySelector("#initial").style.display = "none";
+  timerEl.textContent = `time left = ${currentTime}`;
+  timerInterval = setInterval(() => {
+    currentTime--;
+    if (currentTime <= 0) {
+      endGame();
+    }
+    timerEl.textContent = `time left = ${currentTime}`;
+  }, 1000);
+  displayQuestion();
+}
+
+//Function that renders the questions on the website
 function displayQuestion() {
-    questionArea.innerHTML = "";
+  questionArea.innerHTML = "";
   const outerDiv = document.createElement("div");
   outerDiv.innerHTML = `
     <h4>${questions[currentQuestion].questionText}</h4>
@@ -58,25 +68,54 @@ function displayQuestion() {
   }
 }
 
+//Checks if answer is correct, then either calls the next question or ends the quiz
 function evaluate(event) {
-  console.log(event.target.dataset.choice === questions[currentQuestion].correct);  
-
-  currentQuestion++;
-  displayQuestion();
+  if (event.target.dataset.choice !== questions[currentQuestion].correct) {
+    currentTime -= 10;
+    if (currentTime <= 0) {
+      endGame();
+    }
+  }
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    displayQuestion();
+  } else {
+    endGame();
+  }
 }
-//Adds event listeners for all of the clickable submit buttons
-//for (var i = 0; i < submitButton.length; i++ ){
-// submitButton[i].addEventListener("click", Quiz);
-// submitButton[i].parentElement.style.display = "none";
-//}
 
-//Begins the quiz when the user clicks Go.
-function startTest() {
-  document.querySelector("#initial").style.display = "none";
-  timerEl.textContent = `time left = ${currentTime}`;
-  timerInterval = setInterval(() => {
-    currentTime--;
-    timerEl.textContent = `time left = ${currentTime}`;
-}, 1000)
-  displayQuestion();
+//Logic that runs when the game ends
+function endGame() {
+  finalScore = currentTime;
+  clearInterval(timerInterval);
+  var scoreForm = document.createElement("div");
+  scoreForm.innerHTML = `
+      <h4>Enter your initials to save your score!<h4>
+      <input id="playerInitials"> <input type="submit" value ="submit" id="record">
+    `;
+  questionArea.append(scoreForm);
+  scoreForm
+    .querySelector("#record")
+    .addEventListener("click", function (Pikachu) {
+      Pikachu.preventDefault();
+      var scoreEntry = {
+        initials: document.querySelector("#playerInitials").value.trim(),
+        score: finalScore
+      }
+      localStorage.setItem("user", JSON.stringify(scoreEntry))
+    });
 }
+
+function highScores () {
+  hsList.innerHTML="";
+
+}
+
+
+
+//End game button
+document.querySelector("#end-game").addEventListener("click", function () {
+  console.log("end the timer");
+
+  clearInterval(timerInterval);
+});
