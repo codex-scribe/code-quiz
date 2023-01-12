@@ -11,7 +11,6 @@ var indivQuestion = [];
 indivQuestion = document.querySelector("#indivQuestion");
 var correctAnswer;
 
-console.log(hsList);
 //Array of questions for the test
 var questions = [
   {
@@ -41,6 +40,8 @@ startButton.addEventListener("click", startTest);
 
 //Begins the quiz when the user clicks Go.
 function startTest() {
+  currentQuestion = 0;
+  currentTime = 80;
   document.querySelector("#initial").style.display = "none";
   timerEl.textContent = `time left = ${currentTime}`;
   timerInterval = setInterval(() => {
@@ -74,6 +75,7 @@ function displayQuestion() {
 function evaluate(event) {
   if (event.target.dataset.choice !== questions[currentQuestion].correct) {
     currentTime -= 10;
+    timerEl.textContent = `time left = ${currentTime}`;
     if (currentTime <= 0) {
       endGame();
     }
@@ -100,40 +102,42 @@ function endGame() {
     .querySelector("#record")
     .addEventListener("click", function (Pikachu) {
       Pikachu.preventDefault();
-      var scoreEntry = {
+      var newEntry = {
         initials: document.querySelector("#playerInitials").value.trim(),
-        score: finalScore
+        score: finalScore,
+      };
+      var storedHsList = JSON.parse(localStorage.getItem("highscore"));
+      console.log(storedHsList);
+      console.log(typeof storedHsList);
+      if (storedHsList == null) {
+        hsList = [newEntry];
+      } else {
+        hsList = storedHsList;
+        hsList.push(newEntry);
       }
-    // hsList = JSON.parse(localStorage.getItem("highscore"));
-    console.log(hsList);  
-    if (hsList.length !== 0) {
-
-    }
-    hsList.push(scoreEntry);
-    localStorage.setItem("highscore", JSON.stringify(hsList))
-   // localStorage.setItem(document.querySelector("#playerInitials").value, finalScore);
+      console.log(hsList);
+      localStorage.setItem("highscore", JSON.stringify(hsList));
+      //localStorage.setItem(document.querySelector("#playerInitials").value, finalScore);
+      renderHighScores();
     });
 }
 
-function highScores () {
-  hsList.innerHTML="";
-  for (var i = 0; i < localStorage.length; i++){
-    $('body').append(localStorage.getItem(localStorage.key(i)));
+function renderHighScores() {
+  hsArea.innerHTML = "";
+  var hsEl = document.createElement("ol");
+  hsArea.appendChild(hsEl);
+  for (var i = 0; i < hsList.length; i++) {
+    var entry = hsList[i];
+    console.log(entry);
+    var li = document.createElement("li");
+    li.innerHTML = `<span class='hsInitials'> ${entry.initials} </span><span class ='score'> ${entry.score} </span>`;
+    hsArea.append(li);
+  };
+  var playAgainBtn = document.createElement("div");
+  playAgainBtn.innerHTML = "<button id='play-again'>Play Again</button>";
+  hsArea.appendChild(playAgainBtn);
+  playAgainBtn.addEventListener("click", function(){
+    hsArea.innerHTML='';
+    startTest()});
+  
 }
-}
-
-
-
-//End game button
-document.querySelector("#end-game").addEventListener("click", function () {
-  console.log("end the timer");
-
-  clearInterval(timerInterval);
-});
-
-// localStorage.key(0)
-// 'jie'
-// localStorage.key(1)
-// 'eie'
-// localStorage.getItem(localStorage.key(0))
-// '58'
