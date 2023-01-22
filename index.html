@@ -6,20 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Coding Quizlet</title>
-    <link rel="stylesheet" href="./assets/reset.css">
-    <link rel="stylesheet" href="./assets/style.css">
+    <link rel="stylesheet" href="./assets/css/reset.css" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
   <body>
     <h3 id="timer"></h3>
-    <h1>Coding Quizlet</h1>
-    <div id="initial">
-    <h2>Try your best and see what high score you can get!</h2>
-    <button id="start">Go!</button>
-  </div>
-    <div id="questionArea">
+    <div id="mainbody">
+      <h1>Coding Quizlet</h1>
+      <div id="initial">
+        <h2>Try your best and see what high score you can get!</h2>
+        <button id="start">Go!</button>
+      </div>
+      <div id="questionArea"></div>
+      <div id="hsArea" class="hidden">
+        <table>
+          <thead>
+            <th>Rank</th>
+            <th>Initials</th>
+            <th>Score</th>
+          </thead>
+          <tbody id="hsTableBody">
+            <tr>
+              <td>1</td>
+              <td>JKL</td>
+              <td>44</td>
+            </tr>
+          </tbody>
+        </table>
+        <button id='play-again' class="hidden">Play Again</button>
+      </div>
     </div>
-    <div id="hsArea">
-      
-    </div>
-    <script src="./assets/script.js"></script>
+    <script src="./assets/js/script.js"></script>
   </body>
+</html>
