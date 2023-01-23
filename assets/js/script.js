@@ -31,10 +31,21 @@ var questions = [
     correct: "a",
   },
   {
-    questionText: "What is my favorite color",
-    answers: { a: "red", b: "orange", c: "yellow", d: "purple" },
+    questionText: "Which of these is a JQuery element selector?",
+    answers: { a: "#('This')", b: "$('.table')", c: "%paragraph%", d: "$ {this}" },
+    correct: "b",
+  },
+  {
+    questionText: "What is github?",
+    answers: { a: "An online code library", b: "A version control system", c: "A programming language", d: "A debugging method" },
+    correct: "b",
+  },
+  {
+    questionText: "What does CSS stand for?",
+    answers: { a: "Cascading Style Sheet", b: "Computer Storage System", c: "Control-System Software", d: "Containter Soure Synchronization" },
     correct: "a",
   },
+  
 ];
 
 //Event listener to start test

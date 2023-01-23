@@ -6,9 +6,13 @@ To play the quiz, click the start button (labeled Go!) and answer the questions.
 A timer will begin counting down.  If you answer correctly, the page will go on to the next question.
 If you don't answer correctly, 10 seconds will be subtracted from the timer, then it will go to the next question.
 
-
-
-
 ## High score
 When you reach the end, your score will be recorded as the time remaining in the timer.  Enter your initials and click submit, and 
 your score will be recorded and displayed in a table!  If you want to play again, you may do so, and subsequent stores will also be saved.
+
+##Demo
+Here is the starting page of the quiz:
+![The starting page of the quiz.](./assets/images/ss1.png)
+
+Here is where to register the high score:
+![High score page](./assets/images/ss2.png)
